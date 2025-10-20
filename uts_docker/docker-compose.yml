@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  postgres_sayyid_maula_rafsanjani:
+    image: postgres:15
+    container_name: postgres_sayyid_maula_rafsanjani
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "22126:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+  pgadmin_sayyid_maula_rafsanjani:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin_sayyid_maula_rafsanjani
+    env_file:
+      - .env
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "44126:80"
+    depends_on:
+      - postgres_sayyid_maula_rafsanjani
+    restart: always
+
+volumes:
+  postgres_data:
